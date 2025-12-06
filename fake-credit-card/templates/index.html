@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Transaction Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(219, 235, 241, 0.6);
+            margin: 0;
+        }
+        .nav-bar {
+            height: 80px;
+            width: 100%;
+            background-color: rgb(1, 1, 148);
+            color: burlywood;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .heading-nav {
+            font-family: cursive;
+            font-size: 24px;
+            margin: 0;
+        }
+        .nav-barr {
+            height: 85px;
+            width: 100%;
+            background-color: rgb(84, 84, 200);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .nav-barr div {
+            text-align: center;
+            cursor: pointer;
+        }
+        .nav-barr i {
+            font-size: 35px;
+        }
+        .nav-barr p {
+            font-family: cursive;
+            font-size: 15px;
+        }
+        .lang {
+            background-color: rgba(0, 0, 0, 0.811);
+            color: white;
+            height: 30px;
+            width: 100px;
+            font-size: 15px;
+            margin-top: 20px;
+            font-family: Sans, Helvetica Neue, Segoe UI, Roboto, Ubuntu, sans-serif;
+            border-radius: 4px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 20px;
+            width: 800px;
+            margin-left: 350px;
+            align-items: center;
+        }
+        input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #724ae8;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #8260e8;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <h1 class="heading-nav">WEBGAURD</h1>
+        </div>
+        <div class="nav-barr">
+            <h1>Check Fake Credit Card</h1>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Check Credit Card Transaction</h1>
+        <input type="number" id="v28" placeholder="Enter value" required>
+        <button onclick="checkTransaction()">Check Transaction</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function checkTransaction() {
+            const v28_value = document.getElementById('v28').value;
+            if (!v28_value) {
+                document.getElementById('result').innerText = "Please enter a V28 value.";
+                return;
+            }
+            
+            fetch('/check_transaction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ v28_value: v28_value })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = data.message || data.error;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById('result').innerText = "An error occurred. Please try again.";
+            });
+        }
+            let b = document.querySelector(".mode");
+                    let cur="light"
+                    b.addEventListener("click",(evt)=>{
+                        if(cur==="light"){
+                            cur="dark";
+                            document.body.style.background= "rgb(2, 2, 33)";
+                            document.body.style.color="burlywood";
+                        }
+                        else{
+                            cur="light";
+                            document.body.style.background= "rgba(219, 235, 241, 0.6)";
+                            document.body.style.color="black";
+                        }
+                    })
+
+    </script>
+</body>
+</html>
