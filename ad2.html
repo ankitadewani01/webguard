@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<title>Fake Offer Detection</title>
+</head>
+<header>
+    <div class="nav-bar" >
+        <h1 class="heading-nav">WEBGAURD</h1>
+    </div>
+    <div class="nav-barr">
+        <div class="home" onclick="window.location.href='ad1.html'">
+            <i class="fa-solid fa-house"></i>
+            <p>HOME</p>
+        </div>
+        <div class="chat" onclick="window.location.href='chatbot.html'">
+            <i class="fa-solid fa-message"></i>
+            <p>CHATBOT</p>
+        </div>
+        <div class="video" onclick="window.location.href='vid.html'">
+            <i class="fa-solid fa-video"></i>
+            <p>VIDEOS</p>
+        </div>
+        <div class="website-search" onclick="window.location.href='ad2.html'">
+            <i class="fa-solid fa-shield-cat"></i>
+            <p>WEBGAURD ITEMS</p>
+        </div>
+        <div class="mode">
+            <i class="fa-solid fa-sun"></i>
+            <p>MODE</p>
+        </div>
+        <div >
+            <select class="lang">
+                <option CLASS="ee">English</option>
+                <option>Hindi</option>
+                <option>Telugu</option>
+                <option>Sindhi</option>
+                <option>Russian</option>
+            </select>
+        </div>
+    </div>
+</header>
+<body>
+<h1>Fake Offer Detection</h1>
+<form id="offerForm">
+    <label for="offerText" style="color: black;">Enter the offer text:</label><br>
+    <textarea id="offerText" name="offerText" rows="4" cols="50"></textarea><br>
+    <div id="offerResult" class="result"></div>
+    <button type="button" onclick="detectFakeOffer()">Check Offer</button>
+</form>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+textarea {
+    width: 90%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+button {
+    margin-left: 30px;
+    height: 50px;
+    width: 150px;
+    border-radius: 12%;
+    background-color: rgb(84, 84, 200);
+    font-size: large;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    margin-top: 10px;
+}
+
+.fake {
+    color: red;
+}
+
+.legitimate {
+    color: green;
+}
+.nav-bar{
+    height: 80px;
+    width: 100%;
+    background-color: rgb(1, 1, 148);
+    color: burlywood;
+}
+body{
+    background-color: rgba(219, 235, 241, 0.6);
+}
+.heading-nav{
+    font-family: cursive;
+    text-align: center;
+    padding-top: 1%;
+}
+.nav-barr{
+    height: 85px;
+    width: 100%;
+    background-color: rgb(84, 84, 200);
+    display: flex;
+}
+.home{
+    padding: 10px;
+    text-align: center;
+    padding-left: 150px;
+}
+.home i{
+    font-size: 35px;
+
+}
+.home p{
+    font-family:cursive;
+    font-size: 15px;
+}
+.chat{
+    padding: 10px;
+    text-align: center;
+    padding-left: 150px;
+}
+.chat i{
+    font-size: 35px;
+}
+.chat p{
+    font-family:cursive;
+    font-size: 15px;
+}
+.video{
+    padding: 10px;
+    text-align: center;
+    padding-left: 120px;
+}
+.video i{
+    font-size: 35px;
+}
+.video p{
+    font-family:cursive;
+    font-size: 15px;
+}
+.website-search{
+    padding: 10px;
+    text-align: center;
+    padding-left: 150px;
+}
+.website-search i{
+    font-size: 35px;
+}
+.website-search p{
+    font-family:cursive;
+    font-size: 15px;
+}
+.mode{
+padding: 10px;
+text-align: center;
+padding-left: 120px;
+}
+.mode i{
+font-size: 35px;
+}
+.mode p{
+font-family:cursive;
+font-size: 15px;
+}
+.lang{
+background-color: rgba(0, 0, 0, 0.811);
+color: white;
+height: 30px;
+width: 100px;
+font-size: 15px;
+margin-top: 20px;
+font-family:  Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
+border-radius: 4px;
+margin-left: 150px;
+}
+</style>
+<script>
+    function detectFakeOffer() {
+    const offerText = document.getElementById('offerText').value;
+
+    // Check for common patterns or keywords associated with fake offers
+    const patterns = [
+        /free\s*\w*\s*[\w\s]*/i,       // e.g., "free gift", "get free"
+        /win\s*\w*\s*[\w\s]*/i,        // e.g., "win a prize", "chance to win"
+        /limited\s*offer/i,            // e.g., "limited time offer"
+        /exclusive\s*deal/i,           // e.g., "exclusive offer"
+        /guaranteed\s*win/i,           // e.g., "guaranteed to win"
+        /discount\s*\d+%/i,            // e.g., "discount 50%"
+        /save\s*\d+\s*\w*/i,           // e.g., "save $100"
+        /act\s*now/i,                  // e.g., "act now!"
+        /urgent\s*offer/i             // e.g., "urgent offer"
+    ];
+
+    let isFakeOffer = false;
+
+    // Check if any pattern matches the offer text
+    patterns.forEach(pattern => {
+        if (pattern.test(offerText)) {
+            isFakeOffer = true;
+        }
+    });
+
+    // Display result
+    const offerResult = document.getElementById('offerResult');
+    if (isFakeOffer) {
+        offerResult.innerHTML = "<p class='fake'>This offer appears to be fake.</p>";
+    } else {
+        offerResult.innerHTML = "<p class='legitimate'>This offer seems to be legitimate.</p>";
+    }
+}
+let b = document.querySelector(".mode");
+            let cur="light"
+            b.addEventListener("click",(evt)=>{
+                if(cur==="light"){
+                    cur="dark";
+                    document.body.style.background= "rgb(2, 2, 33)";
+                    document.body.style.color="burlywood";
+                }
+                else{
+                    cur="light";
+                    document.body.style.background= "rgba(219, 235, 241, 0.6)";
+                    document.body.style.color="black";
+                }
+            })
+//let x = document.getElementById("maill").value;
+function openPopup() {
+    document.getElementById("popup").style.display = "block";
+}
+function closepopup(){
+    document.getElementById("popup").style.display = "none";
+}
+function openPopu() {
+    document.getElementById("popu").style.display = "block";
+}
+function closepopu(){
+    document.getElementById("popu").style.display = "none";
+}
+function  openPop(){
+    document.getElementById("pop").style.display = "block";
+}
+function closepop(){
+    document.getElementById("pop").style.display = "none";
+}
+document.getElementById("button").addEventListener("click", function() {
+            // Get the value from the input field
+            let x = document.getElementById("maill").value;
+            
+            // Print a message
+            let messageDiv = document.getElementById("message");
+        if (x.startsWith("https://")|| x.startsWith("🔒") ){
+            messageDiv.textContent = openPopup()
+         }
+            else {
+                messageDiv.textContent = openPop() ;} 
+});
+function check(){
+        var i=document.getElementById("myinput").value;
+        let messageDiv = document.getElementById("message");
+        if(i.length === 0){
+            alert("Enter domain name")
+        }else{
+            buttonTxt = document.querySelector(".btn");
+            buttonTxt.innerText = "Searching...";
+            var domain =i;
+            var apikey="at_kGj0CFQzlA2FM5sSsalSpjX4FKrdd";
+            $.ajax({
+                url: "https://domain-availability.whoisxmlapi.com/api/v1",
+                dataType: "json",
+                data: {apiKey: apikey, domainName: domain},
+                success: function(data){
+                    buttonTxt.innerText="check domain";
+
+                    $(".messagehere").append(`<section class="input-part">
+            <p class="info-txt pending">The domain name ${data.DomainInfo.domainName} is ${data.DomainInfo.domainAvailability}</p>
+        </section>`)
+        if  (data.DomainInfo.domainAvailability =="AVAILABLE"){
+            messageDiv.textContent = openPopu()
+        }
+        else{
+            messageDiv.textContent = openPop() ;
+        }
+                }
+            })
+        }
+    }
+</script>
+</body>
+</html>

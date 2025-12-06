@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div class="nav-bar" >
+            <h1 class="heading-nav">WEBGAURD</h1>
+        </div>
+        <div class="nav-barr">
+            <h1 style="text-align: center;">ALERT VIDEOS</h1>
+            </div>
+    </header>
+    <div class="container">
+        <h1>What are scam websites, and how can you tell if a 
+            page is fake?</h1>
+        <div class="video-container">
+            <div class="video"><video src="videos/v1.mp4" ></video></div>
+            <div class="video"><video src="videos/v2.mp4" muted></video></div>
+            <div class="video"><video src="videos/v3.mp4" muted></video></div>
+            <div class="video"><video src="videos/v4.mp4" muted></video></div>
+            <div class="video"><video src="videos/v5.mp4" muted></video></div>
+            <div class="video"><video src="videos/v6.mp4" muted></video></div>
+            <div class="video"><video src="videos/v7.mp4" muted></video></div>
+            <div class="video"><video src="videos/v8.mp4" muted></video></div>
+        </div>
+        <div class="popup-video">
+            <span>&times;</span>
+            <video src="videos/v1.mp4" muted autoplay controls></video>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.video-container .video').forEach(vid => {
+            vid.onclick = () => {
+                document.querySelector('.popup-video').style.display = 'block';
+                document.querySelector('.popup-video video').src = vid.querySelector('video').getAttribute('src');
+            }
+        });
+        
+        document.querySelector('.popup-video span').onclick = () => {
+            document.querySelector('.popup-video').style.display = 'none';
+        }
+        let b = document.querySelector(".mode");
+            let cur="light"
+            b.addEventListener("click",(evt)=>{
+                if(cur==="light"){
+                    cur="dark";
+                    document.body.style.background= "rgb(2, 2, 33)";
+                    document.body.style.color="burlywood";
+                }
+                else{
+                    cur="light";
+                    document.body.style.background= "rgba(219, 235, 241, 0.6)";
+                    document.body.style.color="black";
+                }
+            })
+    </script>
+
+</body>
+</html>
