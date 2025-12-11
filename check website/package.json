@@ -1,0 +1,17 @@
+{
+  "name": "website-checker",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^3.0.0",
+    "whois-json": "^2.0.4"
+  },
+  "author": "",
+  "license": "ISC"
+}
